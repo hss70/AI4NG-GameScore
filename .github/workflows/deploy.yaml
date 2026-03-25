@@ -47,6 +47,6 @@ jobs:
               "Environment=${{ env.Environment }}" \
               "ParticipantUserPoolId=${{ env.PARTICIPANT_USER_POOL_ID }}" \
             --resolve-s3 \
-            --capabilities CAPABILITY_IAM \
+            --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND \
             --no-confirm-changeset \
             --no-fail-on-empty-changeset
