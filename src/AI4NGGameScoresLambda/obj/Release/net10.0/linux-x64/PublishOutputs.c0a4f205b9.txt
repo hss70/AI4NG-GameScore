@@ -1,0 +1,16 @@
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\AI4NGGameScoresLambda
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\appsettings.Development.json
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\appsettings.json
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\aws-lambda-tools-defaults.json
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\AI4NGGameScoresLambda.deps.json
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\AI4NGGameScoresLambda.runtimeconfig.json
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\AI4NGGameScoresLambda.pdb
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\Amazon.Lambda.APIGatewayEvents.dll
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\Amazon.Lambda.ApplicationLoadBalancerEvents.dll
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\Amazon.Lambda.AspNetCoreServer.dll
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\Amazon.Lambda.Core.dll
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\Amazon.Lambda.Logging.AspNetCore.dll
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\Amazon.Lambda.Serialization.SystemTextJson.dll
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\AWSSDK.Core.dll
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\AWSSDK.DynamoDBv2.dll
+C:\Dev\AI4NG\AI4NG-GameScore\src\AI4NGGameScoresLambda\bin\Release\net10.0\publish\AI4NGGameScoresLambda.dll

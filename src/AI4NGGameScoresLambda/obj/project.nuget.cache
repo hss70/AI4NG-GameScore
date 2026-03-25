@@ -1,0 +1,61 @@
+{
+  "version": 2,
+  "dgSpecHash": "ag2JpDMj8Sw=",
+  "success": true,
+  "projectFilePath": "C:\\Dev\\AI4NG\\AI4NG-GameScore\\src\\AI4NGGameScoresLambda\\AI4NGGameScoresLambda.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Hardeep\\.nuget\\packages\\amazon.lambda.apigatewayevents\\2.7.3\\amazon.lambda.apigatewayevents.2.7.3.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\amazon.lambda.applicationloadbalancerevents\\2.2.0\\amazon.lambda.applicationloadbalancerevents.2.2.0.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\amazon.lambda.aspnetcoreserver\\9.2.1\\amazon.lambda.aspnetcoreserver.9.2.1.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\amazon.lambda.core\\2.8.0\\amazon.lambda.core.2.8.0.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\amazon.lambda.logging.aspnetcore\\4.1.1\\amazon.lambda.logging.aspnetcore.4.1.1.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\amazon.lambda.serialization.systemtextjson\\2.4.4\\amazon.lambda.serialization.systemtextjson.2.4.4.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\awssdk.core\\4.0.3.19\\awssdk.core.4.0.3.19.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\awssdk.dynamodbv2\\4.0.17.1\\awssdk.dynamodbv2.4.0.17.1.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.5\\microsoft.extensions.configuration.10.0.5.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\10.0.5\\microsoft.extensions.dependencyinjection.10.0.5.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\microsoft.extensions.logging\\10.0.5\\microsoft.extensions.logging.10.0.5.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\microsoft.netcore.app.runtime.linux-x64\\10.0.5\\microsoft.netcore.app.runtime.linux-x64.10.0.5.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.linux-x64\\10.0.5\\microsoft.aspnetcore.app.runtime.linux-x64.10.0.5.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\microsoft.netcore.app.crossgen2.win-x64\\10.0.5\\microsoft.netcore.app.crossgen2.win-x64.10.0.5.nupkg.sha512",
+    "C:\\Users\\Hardeep\\.nuget\\packages\\microsoft.netcore.app.host.linux-x64\\10.0.5\\microsoft.netcore.app.host.linux-x64.10.0.5.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference Microsoft.Extensions.Configuration will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "C:\\Dev\\AI4NG\\AI4NG-GameScore\\src\\AI4NGGameScoresLambda\\AI4NGGameScoresLambda.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Dev\\AI4NG\\AI4NG-GameScore\\src\\AI4NGGameScoresLambda\\AI4NGGameScoresLambda.csproj",
+      "libraryId": "Microsoft.Extensions.Configuration",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference Microsoft.Extensions.DependencyInjection will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "C:\\Dev\\AI4NG\\AI4NG-GameScore\\src\\AI4NGGameScoresLambda\\AI4NGGameScoresLambda.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Dev\\AI4NG\\AI4NG-GameScore\\src\\AI4NGGameScoresLambda\\AI4NGGameScoresLambda.csproj",
+      "libraryId": "Microsoft.Extensions.DependencyInjection",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference Microsoft.Extensions.Logging will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "C:\\Dev\\AI4NG\\AI4NG-GameScore\\src\\AI4NGGameScoresLambda\\AI4NGGameScoresLambda.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Dev\\AI4NG\\AI4NG-GameScore\\src\\AI4NGGameScoresLambda\\AI4NGGameScoresLambda.csproj",
+      "libraryId": "Microsoft.Extensions.Logging",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}

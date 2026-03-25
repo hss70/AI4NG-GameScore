@@ -1,0 +1,325 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AI4NG Game Scores API
+Parameters:
+  Environment:
+    Type: String
+    Default: predev
+    AllowedValues:
+    - predev
+    - dev
+    - staging
+    - prod
+  ParticipantUserPoolId:
+    Type: String
+    Default: eu-west-2_EaNz6cSp0
+    Description: Cognito User Pool ID for participant authentication
+Globals:
+  Function:
+    Runtime: dotnet8
+    Timeout: 30
+    MemorySize: 512
+    Architectures:
+    - x86_64
+    Tracing: Active
+    LoggingConfig:
+      LogFormat: JSON
+    Environment:
+      Variables:
+        Environment:
+          Ref: Environment
+        GAME_SCORES_TABLE:
+          Ref: GameScoresTable
+        COGNITO_USER_POOL_ID:
+          Ref: ParticipantUserPoolId
+Resources:
+  GameScoresTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName:
+        Fn::Sub: ai4ng-${Environment}-game-scores
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+      - AttributeName: PK
+        AttributeType: S
+      - AttributeName: SK
+        AttributeType: S
+      - AttributeName: GSI1PK
+        AttributeType: S
+      - AttributeName: GSI1SK
+        AttributeType: S
+      - AttributeName: GSI2PK
+        AttributeType: S
+      - AttributeName: GSI2SK
+        AttributeType: S
+      - AttributeName: GSI3PK
+        AttributeType: S
+      - AttributeName: GSI3SK
+        AttributeType: S
+      - AttributeName: GSI4PK
+        AttributeType: S
+      - AttributeName: GSI4SK
+        AttributeType: S
+      KeySchema:
+      - AttributeName: PK
+        KeyType: HASH
+      - AttributeName: SK
+        KeyType: RANGE
+      GlobalSecondaryIndexes:
+      - IndexName: GSI1
+        KeySchema:
+        - AttributeName: GSI1PK
+          KeyType: HASH
+        - AttributeName: GSI1SK
+          KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
+      - IndexName: GSI2
+        KeySchema:
+        - AttributeName: GSI2PK
+          KeyType: HASH
+        - AttributeName: GSI2SK
+          KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
+      - IndexName: GSI3
+        KeySchema:
+        - AttributeName: GSI3PK
+          KeyType: HASH
+        - AttributeName: GSI3SK
+          KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
+      - IndexName: GSI4
+        KeySchema:
+        - AttributeName: GSI4PK
+          KeyType: HASH
+        - AttributeName: GSI4SK
+          KeyType: RANGE
+        Projection:
+          ProjectionType: ALL
+      SSESpecification:
+        SSEEnabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      Tags:
+      - Key: Project
+        Value: AI4NG
+      - Key: Service
+        Value: GameScores
+      - Key: Environment
+        Value:
+          Ref: Environment
+  GameScoresFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName:
+        Fn::Sub: ai4ng-${Environment}-game-scores-lambda-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+      - PolicyName:
+          Fn::Sub: ai4ng-${Environment}-game-scores-dynamodb
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Sid: GameScoresTableReadWrite
+            Effect: Allow
+            Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:UpdateItem
+            - dynamodb:Query
+            - dynamodb:ConditionCheckItem
+            - dynamodb:TransactWriteItems
+            Resource:
+            - Fn::GetAtt:
+              - GameScoresTable
+              - Arn
+            - Fn::Sub: ${GameScoresTable.Arn}/index/GSI1
+            - Fn::Sub: ${GameScoresTable.Arn}/index/GSI2
+            - Fn::Sub: ${GameScoresTable.Arn}/index/GSI3
+            - Fn::Sub: ${GameScoresTable.Arn}/index/GSI4
+      - PolicyName:
+          Fn::Sub: ai4ng-${Environment}-ExperimentsTableRead-dynamodb
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Sid: ExperimentsTableRead
+            Effect: Allow
+            Action:
+            - dynamodb:GetItem
+            - dynamodb:Query
+            - dynamodb:ConditionCheckItem
+            Resource:
+            - Fn::ImportValue:
+                Fn::Sub: AI4NG-ExperimentsTableArn
+            - Fn::Sub:
+              - ${TableArn}/index/GSI1
+              - TableArn:
+                  Fn::ImportValue:
+                    Fn::Sub: AI4NG-ExperimentsTableArn
+      - PolicyName:
+          Fn::Sub: ai4ng-${Environment}-game-scores-cognito-read
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Sid: CognitoUserPoolRead
+            Effect: Allow
+            Action:
+            - cognito-idp:GetUser
+            - cognito-idp:AdminGetUser
+            Resource:
+              Fn::Sub: arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${ParticipantUserPoolId}
+  GameScoresLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName:
+        Fn::Sub: /aws/lambda/ai4ng-${Environment}-game-scores-api
+      RetentionInDays: 30
+  GameScoresFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: ai4ng-${Environment}-game-scores-api
+      CodeUri: GameScoresFunction
+      Handler: AI4NGGameScoresLambda
+      Role:
+        Fn::GetAtt:
+        - GameScoresFunctionRole
+        - Arn
+      Environment:
+        Variables:
+          Environment:
+            Ref: Environment
+          GAME_SCORES_TABLE:
+            Ref: GameScoresTable
+          EXPERIMENTS_TABLE:
+            Fn::ImportValue:
+              Fn::Sub: AI4NG-ExperimentsTableName
+          COGNITO_USER_POOL_ID:
+            Ref: ParticipantUserPoolId
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup:
+          Ref: GameScoresLogGroup
+      Tags:
+        Project: AI4NG
+        Service: GameScores
+        Environment:
+          Ref: Environment
+    Metadata:
+      SamResourceId: GameScoresFunction
+  GameScoreIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId:
+        Fn::ImportValue:
+          Fn::Sub: SharedApiId
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::GetAtt:
+        - GameScoresFunction
+        - Arn
+      PayloadFormatVersion: '2.0'
+      IntegrationMethod: POST
+  PostMyGameScoreRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Fn::ImportValue:
+          Fn::Sub: SharedApiId
+      RouteKey: POST /api/me/game-scores
+      AuthorizationType: JWT
+      AuthorizerId:
+        Fn::ImportValue:
+          Fn::Sub: SharedApiAuthorizerId
+      Target:
+        Fn::Sub: integrations/${GameScoreIntegration}
+  GetMyGameScoresRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Fn::ImportValue:
+          Fn::Sub: SharedApiId
+      RouteKey: GET /api/me/game-scores/{gameKey}
+      AuthorizationType: JWT
+      AuthorizerId:
+        Fn::ImportValue:
+          Fn::Sub: SharedApiAuthorizerId
+      Target:
+        Fn::Sub: integrations/${GameScoreIntegration}
+  GetMyBestGameScoresRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Fn::ImportValue:
+          Fn::Sub: SharedApiId
+      RouteKey: GET /api/me/game-scores/{gameKey}/best
+      AuthorizationType: JWT
+      AuthorizerId:
+        Fn::ImportValue:
+          Fn::Sub: SharedApiAuthorizerId
+      Target:
+        Fn::Sub: integrations/${GameScoreIntegration}
+  GetLeaderboardRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Fn::ImportValue:
+          Fn::Sub: SharedApiId
+      RouteKey: GET /api/leaderboards/{gameKey}
+      AuthorizationType: JWT
+      AuthorizerId:
+        Fn::ImportValue:
+          Fn::Sub: SharedApiAuthorizerId
+      Target:
+        Fn::Sub: integrations/${GameScoreIntegration}
+  GetGlobalLeaderboardRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId:
+        Fn::ImportValue:
+          Fn::Sub: SharedApiId
+      RouteKey: GET /api/leaderboards/{gameKey}/global
+      AuthorizationType: JWT
+      AuthorizerId:
+        Fn::ImportValue:
+          Fn::Sub: SharedApiAuthorizerId
+      Target:
+        Fn::Sub: integrations/${GameScoreIntegration}
+Outputs:
+  GameScoresFunctionArn:
+    Description: ARN of the Game Scores Lambda
+    Value:
+      Fn::GetAtt:
+      - GameScoresFunction
+      - Arn
+    Export:
+      Name:
+        Fn::Sub: AI4NG-GameScoresFunctionArn-${Environment}
+  GameScoresTableName:
+    Description: Name of the Game Scores DynamoDB table
+    Value:
+      Ref: GameScoresTable
+    Export:
+      Name:
+        Fn::Sub: AI4NG-GameScoresTableName-${Environment}
+  GameScoresTableArn:
+    Description: ARN of the Game Scores DynamoDB table
+    Value:
+      Fn::GetAtt:
+      - GameScoresTable
+      - Arn
+    Export:
+      Name:
+        Fn::Sub: AI4NG-GameScoresTableArn-${Environment}

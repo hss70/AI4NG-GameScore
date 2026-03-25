@@ -1,0 +1,52 @@
+name: Deploy Experiment Management to AWS Lambda
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: eu-west-2
+      STACK_NAME: AI4NG-GameScoreEngine-predev
+      PARTICIPANT_USER_POOL_ID: eu-west-2_EaNz6cSp0
+      Environment: predev
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Install AWS SAM CLI
+        uses: aws-actions/setup-sam@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+
+      - name: Build SAM
+        env:
+          SAM_CLI_TELEMETRY: 0
+        run: sam build --template-file infra/template.yaml
+
+      - name: Deploy SAM
+        run: |
+          sam deploy \
+            --stack-name ${{ env.STACK_NAME }} \
+            --parameter-overrides \
+              "Environment=${{ env.Environment }}" \
+              "ParticipantUserPoolId=${{ env.PARTICIPANT_USER_POOL_ID }}" \
+            --resolve-s3 \
+            --capabilities CAPABILITY_IAM \
+            --no-confirm-changeset \
+            --no-fail-on-empty-changeset
