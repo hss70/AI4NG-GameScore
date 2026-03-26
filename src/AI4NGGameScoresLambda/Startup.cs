@@ -1,4 +1,5 @@
-﻿using AI4NGGameScoresLambda.Interfaces;
+﻿using AI4NGGameScoresLambda.Filters;
+using AI4NGGameScoresLambda.Interfaces;
 using AI4NGGameScoresLambda.Services;
 using Amazon.DynamoDBv2;
 using Microsoft.AspNetCore.Builder;
@@ -17,7 +18,12 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers().AddJsonOptions(options =>
+        services.AddControllers(options =>
+        {
+            options.Filters.Add<ApiExceptionFilter>();
+        }
+
+        ).AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
             });

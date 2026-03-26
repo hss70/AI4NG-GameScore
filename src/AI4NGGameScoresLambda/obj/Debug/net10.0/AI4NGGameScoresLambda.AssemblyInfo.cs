@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AI4NGGameScoresLambda")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba5b3b753b6fb10afecf9a01b020c4b607177f86")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aacdabf105ffb6d0b1756a0c43952cf6c52d7471")]
 [assembly: System.Reflection.AssemblyProductAttribute("AI4NGGameScoresLambda")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AI4NGGameScoresLambda")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

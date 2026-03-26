@@ -1,0 +1,47 @@
+# .NET
+src/AI4NGGameScoresLambda/bin/
+src/AI4NGGameScoresLambda/obj/
+*.dll
+*.exe
+*.pdb
+*.user
+*.suo
+.vs/
+.vscode/
+*.csproj.user
+
+# Lambda
+*.zip
+package/
+build/
+
+# Dependencies
+node_modules/
+packages/
+
+# Environment
+.env
+.env.local
+appsettings.local.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
+src/AI4NGGameScoresLambda/bin/Debug/net10.0/AI4NGGameScoresLambda.dll
+src/AI4NGGameScoresLambda/bin/Debug/net10.0/AI4NGGameScoresLambda.exe
+src/AI4NGGameScoresLambda/bin/Debug/net10.0/AI4NGGameScoresLambda.pdb
+src/AI4NGGameScoresLambda/obj/Debug/net10.0/AI4NGGameScoresLambda.AssemblyInfoInputs.cache
+src/AI4NGGameScoresLambda/obj/Debug/net10.0/AI4NGGameScoresLambda.csproj.CoreCompileInputs.cache
+src/AI4NGGameScoresLambda/obj/Debug/net10.0/AI4NGGameScoresLambda.dll
+src/AI4NGGameScoresLambda/obj/Debug/net10.0/AI4NGGameScoresLambda.pdb
+src/AI4NGGameScoresLambda/obj/Debug/net10.0/AI4NGGameScoresLambda.sourcelink.json
+src/AI4NGGameScoresLambda/obj/Debug/net10.0/apphost.exe
+src/AI4NGGameScoresLambda/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json
+src/AI4NGGameScoresLambda/obj/Debug/net10.0/rjsmrazor.dswa.cache.json
+src/AI4NGGameScoresLambda/obj/Debug/net10.0/ref/AI4NGGameScoresLambda.dll
+src/AI4NGGameScoresLambda/obj/Debug/net10.0/refint/AI4NGGameScoresLambda.dll
