@@ -217,6 +217,18 @@ Resources:
       IntegrationUri: !GetAtt GameScoresFunction.Arn
       PayloadFormatVersion: "2.0"
       IntegrationMethod: POST
+  GameScoresLambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref GameScoresFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Sub:
+          - arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiId}/*/*
+          - ApiId:
+              Fn::ImportValue:
+                Fn::Sub: SharedApiId
 
   PostMyGameScoreRoute:
     Type: AWS::ApiGatewayV2::Route
