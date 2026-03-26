@@ -189,7 +189,7 @@ Resources:
     Properties:
       FunctionName: !Sub ai4ng-${Environment}-game-scores-api
       CodeUri: ../src/AI4NGGameScoresLambda/
-      Handler: AI4NGGameScoresLambda
+      Handler: AI4NGGameScoresLambda::AI4NGGameScoresLambda.LambdaEntryPoint::FunctionHandlerAsync
       Role: !GetAtt GameScoresFunctionRole.Arn
       Environment:
         Variables:
