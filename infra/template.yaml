@@ -197,7 +197,7 @@ Resources:
           GAME_SCORES_TABLE: !Ref GameScoresTable
           EXPERIMENTS_TABLE:
             Fn::ImportValue:
-              Fn::Sub: AI4NG-ExperimentsTableName
+              Fn::Sub: AI4NG-ExperimentsTable
           COGNITO_USER_POOL_ID: !Ref ParticipantUserPoolId
       LoggingConfig:
         LogFormat: JSON
