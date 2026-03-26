@@ -75,9 +75,4 @@ public static class DynamoKeyBuilder
 
         return value.Trim();
     }
-
-    internal static string BuildExperimentGsi4Pk(string experimentId)
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -24,6 +24,9 @@ public static class GameScoreItemMapper
             ["GSI3PK"] = new AttributeValue { S = item.GSI3PK },
             ["GSI3SK"] = new AttributeValue { S = item.GSI3SK },
 
+            ["GSI4PK"] = new AttributeValue { S = item.GSI4PK },
+            ["GSI4SK"] = new AttributeValue { S = item.GSI4SK },
+
             ["Type"] = new AttributeValue { S = item.Type },
             ["scoreId"] = new AttributeValue { S = item.ScoreId },
             ["experimentId"] = new AttributeValue { S = item.ExperimentId },

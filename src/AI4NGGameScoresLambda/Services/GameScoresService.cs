@@ -54,7 +54,7 @@ public sealed class GameScoresService : IGameScoresService
             GSI3PK = DynamoKeyBuilder.BuildUserGameClassifierGsi3Pk(userId, request.GameKey, request.ClassifierId),
             GSI3SK = DynamoKeyBuilder.BuildUserGameClassifierGsi3Sk(playedAtUtc, scoreId),
 
-            GSI4PK = DynamoKeyBuilder.BuildExperimentGsi4Pk(request.ExperimentId),
+            GSI4PK = DynamoKeyBuilder.BuildLeaderboardGsi4Pk(request.GameKey, request.ExperimentId),
             GSI4SK = DynamoKeyBuilder.BuildLeaderboardGsi1Sk(request.ScoreValue, playedAtUtc, userId, scoreId),
 
             Type = "GameScore",
