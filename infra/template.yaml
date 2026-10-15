@@ -12,11 +12,6 @@ Parameters:
       - staging
       - prod
 
-  ParticipantUserPoolId:
-    Type: String
-    Default: eu-west-2_EaNz6cSp0
-    Description: Cognito User Pool ID for participant authentication
-
 Globals:
   Function:
     Runtime: dotnet10
@@ -31,7 +26,6 @@ Globals:
       Variables:
         Environment: !Ref Environment
         GAME_SCORES_TABLE: !Ref GameScoresTable
-        COGNITO_USER_POOL_ID: !Ref ParticipantUserPoolId
 
 Resources:
   GameScoresTable:
@@ -167,16 +161,17 @@ Resources:
                         Fn::ImportValue:
                           Fn::Sub: AI4NG-ExperimentsTableArn
 
-        - PolicyName: !Sub ai4ng-${Environment}-game-scores-cognito-read
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Sid: CognitoUserPoolRead
+              - Sid: CognitoUserAdminLookupReadOnly
                 Effect: Allow
                 Action:
+                  - cognito-idp:ListUsers
                   - cognito-idp:GetUser
                   - cognito-idp:AdminGetUser
-                Resource: !Sub arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${ParticipantUserPoolId}
+                Resource: !Sub
+                  - arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${UserPoolId}
+                  - UserPoolId:
+                      Fn::ImportValue:
+                        Fn::Sub: AI4NG-${Environment}-ParticipantUserPoolId
 
   GameScoresLogGroup:
     Type: AWS::Logs::LogGroup
@@ -198,7 +193,9 @@ Resources:
           EXPERIMENTS_TABLE:
             Fn::ImportValue:
               Fn::Sub: AI4NG-ExperimentsTable
-          COGNITO_USER_POOL_ID: !Ref ParticipantUserPoolId
+          COGNITO_USER_POOL_ID:
+            Fn::ImportValue:
+              Fn::Sub: AI4NG-${Environment}-ParticipantUserPoolId
       LoggingConfig:
         LogFormat: JSON
         LogGroup: !Ref GameScoresLogGroup
@@ -240,7 +237,7 @@ Resources:
       AuthorizationType: JWT
       AuthorizerId:
         Fn::ImportValue:
-          Fn::Sub: SharedApiAuthorizerId
+          Fn::Sub: AI4NG-${Environment}-ParticipantAuthorizerId
       Target: !Sub integrations/${GameScoreIntegration}
 
   GetMyGameScoresRoute:
@@ -253,7 +250,7 @@ Resources:
       AuthorizationType: JWT
       AuthorizerId:
         Fn::ImportValue:
-          Fn::Sub: SharedApiAuthorizerId
+          Fn::Sub: AI4NG-${Environment}-ParticipantAuthorizerId
       Target: !Sub integrations/${GameScoreIntegration}
 
   GetMyBestGameScoresRoute:
@@ -266,7 +263,7 @@ Resources:
       AuthorizationType: JWT
       AuthorizerId:
         Fn::ImportValue:
-          Fn::Sub: SharedApiAuthorizerId
+          Fn::Sub: AI4NG-${Environment}-ParticipantAuthorizerId
       Target: !Sub integrations/${GameScoreIntegration}
 
   GetLeaderboardRoute:
@@ -279,7 +276,7 @@ Resources:
       AuthorizationType: JWT
       AuthorizerId:
         Fn::ImportValue:
-          Fn::Sub: SharedApiAuthorizerId
+          Fn::Sub: AI4NG-${Environment}-ParticipantAuthorizerId
       Target: !Sub integrations/${GameScoreIntegration}
 
   GetGlobalLeaderboardRoute:
@@ -292,7 +289,7 @@ Resources:
       AuthorizationType: JWT
       AuthorizerId:
         Fn::ImportValue:
-          Fn::Sub: SharedApiAuthorizerId
+          Fn::Sub: AI4NG-${Environment}-ParticipantAuthorizerId
       Target: !Sub integrations/${GameScoreIntegration}
 
 Outputs:
